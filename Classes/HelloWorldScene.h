@@ -58,6 +58,9 @@ public:
 	};
 	// ¡‚ÌˆÚ“®•ûŒü
 	Direction dir;
+
+	int pattern;
+	int timer;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

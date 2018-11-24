@@ -118,34 +118,50 @@ bool HelloWorld::init()
     //}
 
 	// テクスチャファイル名を指定して、スプライトを作成
-	sprite = Sprite::create("mario.jpg");
+	sprite = Sprite::create("sample01.png");
 	// シーングラフにつなぐ
 	this->addChild(sprite);
 	// 表示座標を指定
-	sprite->setPosition(Vec2(1180.0f, 620.0f));
+	sprite->setPosition(Vec2(600.0f, 320.0f));
+
+	// テクスチャの範囲指定
+	sprite->setTextureRect(
+		//                            X   Y  幅　高さ
+		CC_RECT_PIXELS_TO_POINTS(Rect(0, 32, 32, 32))
+	);
+	sprite->getTexture()->setAliasTexParameters();
+	//sprite->setTextureRect(Rect(0, 32, 32, 32));
 	//// 回転角を指定
 	//sprite->setRotation(45.0f);
 	// スケールを指定
-	sprite->setScale(0.1f);
-	// 左右反転
-	sprite->setFlippedX(true);
-	// 上下反転
-	sprite->setFlippedY(true);
+	sprite->setScale(5.0f);
+	//// 左右反転
+	//sprite->setFlippedX(true);
+	//// 上下反転
+	//sprite->setFlippedY(true);
 	// 非表示にする
 	//sprite->setVisible(false);
 	// 色合いを設定          Red   Green Blue
 	//sprite->setColor(Color3B(0xff, 0x80, 0x80));
-	sprite->setColor(Color3B(255, 255, 255));
+	//sprite->setColor(Color3B(255, 255, 255));
 	// 不透明度を設定
 	//sprite->setOpacity(128);
 
 	// updateが呼び出されるようにする
 	this->scheduleUpdate();
 
-	// ０秒経過から始める
-	elapsedTime = 0.0f;
-	// 左移動から始める
-	dir = Left;
+	//// ０秒経過から始める
+	//elapsedTime = 0.0f;
+	//// 左移動から始める
+	//dir = Left;
+
+	// 画像のど真ん中が回転やスケーリングの中心
+	//sprite->setAnchorPoint(Vec2(0.5f, 0.5f));
+
+	// 歩きパターン0から始める
+	pattern = 0;
+	// 15フレーム後に切り替える設定
+	timer = 15;
 
     return true;
 }
@@ -155,50 +171,75 @@ void HelloWorld::update(float delta)
 {
 	// 経過時間を加算
 	elapsedTime += delta;
-	// 最大値を制限
-	if (elapsedTime > 5.0f) elapsedTime = 5.0f;
 
-	switch(dir)
-	{ // 移動処理
-		// 左移動
-	case Left:
+	// タイマーが0になったら
+	if (--timer <= 0)
+	{
+		switch (pattern)
 		{
-			// スプライトの現在位置を取得
-			Vec2 pos = sprite->getPosition();
-			// 位置を移動させる
-			pos += Vec2(-10.0f, 0.0f);
-			// 移動後の座標を反映
-			sprite->setPosition(pos);
-			if (pos.x <= 80/2.0f)
-			{
-				dir = Down;
-			}
+		case 0:
+			// 歩きパターン２に切り替え
+			pattern = 2;
+			break;
+		case 2:
+			// 歩きパターン０に切り替え
+			pattern = 0;
 			break;
 		}
-		
-	case Down:
-		{// 下移動
-			// スプライトの現在位置を取得
-			Vec2 pos = sprite->getPosition();
-			// 位置を移動させる
-			pos += Vec2(0.0f, -10.0f);
-			// 移動後の座標を反映
-			sprite->setPosition(pos);
-			if (pos.y <= 80 / 2.0f)
-			{
-				dir = Right;
-			}
-			break;
-		}
+		// 15フレーム後にタイマーを再設定
+		timer = 15;
 	}
 
-	{// ５秒で透明になる
-		////              最大値                 秒数
-		//float opacity = 255.0f * elapsedTime / 5.0f;
-		//// 大小関係を逆転
-		//opacity = 255 - opacity;
-		//sprite->setOpacity(opacity);
-	}
+	// パターン番号から、テクスチャの切り出し位置を決定
+	sprite->setTextureRect(
+		//                            X   Y  幅　高さ
+		CC_RECT_PIXELS_TO_POINTS(Rect(32*pattern, 64, 32, 32))
+	);
+
+	//// 最大値を制限
+	//if (elapsedTime > 5.0f) elapsedTime = 5.0f;
+
+	//switch(dir)
+	//{ // 移動処理
+	//	// 左移動
+	//case Left:
+	//	{
+	//		// スプライトの現在位置を取得
+	//		Vec2 pos = sprite->getPosition();
+	//		// 位置を移動させる
+	//		pos += Vec2(-10.0f, 0.0f);
+	//		// 移動後の座標を反映
+	//		sprite->setPosition(pos);
+	//		if (pos.x <= 80/2.0f)
+	//		{
+	//			dir = Down;
+	//		}
+	//		break;
+	//	}
+	//	
+	//case Down:
+	//	{// 下移動
+	//		// スプライトの現在位置を取得
+	//		Vec2 pos = sprite->getPosition();
+	//		// 位置を移動させる
+	//		pos += Vec2(0.0f, -10.0f);
+	//		// 移動後の座標を反映
+	//		sprite->setPosition(pos);
+	//		if (pos.y <= 80 / 2.0f)
+	//		{
+	//			dir = Right;
+	//		}
+	//		break;
+	//	}
+	//}
+
+	//{// ５秒で透明になる
+	//	////              最大値                 秒数
+	//	//float opacity = 255.0f * elapsedTime / 5.0f;
+	//	//// 大小関係を逆転
+	//	//opacity = 255 - opacity;
+	//	//sprite->setOpacity(opacity);
+	//}
 }
 
 
