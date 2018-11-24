@@ -44,6 +44,20 @@ public:
 
 	// スプライト
 	cocos2d::Sprite* sprite;
+
+	// 経過時間
+	float elapsedTime;
+
+	// 移動方向
+	enum Direction
+	{
+		Left,  // 左
+		Down,  // 下
+		Right, // 右
+		Up     // 上
+	};
+	// 今の移動方向
+	Direction dir;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

@@ -40,6 +40,7 @@ static void problemLoading(const char* filename)
 }
 
 // on "init" you need to initialize your instance
+// 初期化（一度しかやらないこと）
 bool HelloWorld::init()
 {
     //////////////////////////////
@@ -117,13 +118,13 @@ bool HelloWorld::init()
     //}
 
 	// テクスチャファイル名を指定して、スプライトを作成
-	sprite = Sprite::create("green.png");
+	sprite = Sprite::create("mario.jpg");
 	// シーングラフにつなぐ
 	this->addChild(sprite);
 	// 表示座標を指定
-	sprite->setPosition(Vec2(600.0f, 200.0f));
-	// 回転角を指定
-	sprite->setRotation(45.0f);
+	sprite->setPosition(Vec2(1180.0f, 620.0f));
+	//// 回転角を指定
+	//sprite->setRotation(45.0f);
 	// スケールを指定
 	sprite->setScale(0.1f);
 	// 左右反転
@@ -136,23 +137,68 @@ bool HelloWorld::init()
 	//sprite->setColor(Color3B(0xff, 0x80, 0x80));
 	sprite->setColor(Color3B(255, 255, 255));
 	// 不透明度を設定
-	sprite->setOpacity(128);
+	//sprite->setOpacity(128);
 
 	// updateが呼び出されるようにする
 	this->scheduleUpdate();
 
+	// ０秒経過から始める
+	elapsedTime = 0.0f;
+	// 左移動から始める
+	dir = Left;
+
     return true;
 }
 
-// 毎フレーム更新処理
+// 毎フレーム更新処理（継続的に何かさせること）
 void HelloWorld::update(float delta)
 {
-	// スプライトの現在位置を取得
-	Vec2 pos = sprite->getPosition();
-	// 位置を移動させる
-	pos += Vec2(1.0f, 1.0f);
-	// 移動後の座標を反映
-	sprite->setPosition(pos);
+	// 経過時間を加算
+	elapsedTime += delta;
+	// 最大値を制限
+	if (elapsedTime > 5.0f) elapsedTime = 5.0f;
+
+	switch(dir)
+	{ // 移動処理
+		// 左移動
+	case Left:
+		{
+			// スプライトの現在位置を取得
+			Vec2 pos = sprite->getPosition();
+			// 位置を移動させる
+			pos += Vec2(-10.0f, 0.0f);
+			// 移動後の座標を反映
+			sprite->setPosition(pos);
+			if (pos.x <= 80/2.0f)
+			{
+				dir = Down;
+			}
+			break;
+		}
+		
+	case Down:
+		{// 下移動
+			// スプライトの現在位置を取得
+			Vec2 pos = sprite->getPosition();
+			// 位置を移動させる
+			pos += Vec2(0.0f, -10.0f);
+			// 移動後の座標を反映
+			sprite->setPosition(pos);
+			if (pos.y <= 80 / 2.0f)
+			{
+				dir = Right;
+			}
+			break;
+		}
+	}
+
+	{// ５秒で透明になる
+		////              最大値                 秒数
+		//float opacity = 255.0f * elapsedTime / 5.0f;
+		//// 大小関係を逆転
+		//opacity = 255 - opacity;
+		//sprite->setOpacity(opacity);
+	}
 }
 
 
