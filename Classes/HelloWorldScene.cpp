@@ -54,7 +54,34 @@ bool HelloWorld::init()
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
 	// ここにコードを書く
+	Sprite* spr = Sprite::create("mario.jpg");
+	this->addChild(spr);
+	spr->setPosition(Vec2(600, 300));
+	spr->setScale(0.1f);
 
+	// アクションの作成　　　　　　　秒数　　　X座標 Y座標
+	//ScaleBy* action1 = ScaleBy::create(1.0f, 2.0f);
+	//MoveBy* action1 = MoveBy::create(1.0f, Vec2(200, 100));
+	JumpTo* action1 = JumpTo::create(2.0f, Vec2(900, 200), 300.0f, 2);
+	//Blink* action1 = Blink::create(5.0f, 5);
+	//SkewTo* action1 = SkewTo::create(1.0f, 0, 30);
+	//TintTo* action1 = TintTo::create(2.0f, Color3B(255, 0, 0));
+	//ccBezierConfig conf;
+	//conf.controlPoint_1 = Vec2(600, 600);
+	//conf.controlPoint_2 = Vec2(900, 600);
+	//conf.endPosition = Vec2(900, 300);
+	//BezierTo* action1 = BezierTo::create(3.0f, conf);
+	
+	//MoveBy* action1 = MoveBy::create(2.0f, Vec2(600, 300));
+	//EaseIn* action2 = EaseIn::create(action1, 2.0f);
+	//EaseExponentialIn* action2 = EaseExponentialIn::create(action1);
+	//EaseSineIn* action2 = EaseSineIn::create(action1);
+	//EaseElasticIn* action2 = EaseElasticIn::create(action1, 2.0f);
+	EaseBounceIn* action2 = EaseBounceIn::create(action1);
+	//EaseBackIn* action2 = EaseBackIn::create(action1);
+
+	// ノードに対してアクションを実行する
+	spr->runAction(action2);
 
     return true;
 }
