@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
  Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
@@ -41,7 +41,7 @@ static void problemLoading(const char* filename)
 }
 
 // on "init" you need to initialize your instance
-// ‰Šú‰»iˆê“x‚µ‚©‚â‚ç‚È‚¢‚±‚Æj
+// åˆæœŸåŒ–ï¼ˆä¸€åº¦ã—ã‹ã‚„ã‚‰ãªã„ã“ã¨ï¼‰
 bool HelloWorld::init()
 {
     //////////////////////////////
@@ -54,36 +54,40 @@ bool HelloWorld::init()
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-	// ‚±‚±‚ÉƒR[ƒh‚ğ‘‚­
-	// —”‚Ì‰Šú‰»
+	// ã“ã“ã«ã‚³ãƒ¼ãƒ‰ã‚’æ›¸ã
+	// ä¹±æ•°ã®åˆæœŸåŒ–
 	srand(time(0));
 
-	Sprite* sprArray[5];
-	for (int i = 0; i < 5; i++)
-	{
-		//               0.0f~1.0f
-		float x = (float)rand()/RAND_MAX * visibleSize.width;
-		float y = (float)rand()/RAND_MAX * visibleSize.height;
-		// ƒXƒvƒ‰ƒCƒg‚Ìì¬
-		sprArray[i] = Sprite::create("mario.jpg");
-		this->addChild(sprArray[i]);
-		sprArray[i]->setPosition(Vec2(x, y));
-		sprArray[i]->setScale(0.1f);
+	// ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®ç”Ÿæˆ
+	Sprite* spr = Sprite::create("mario.jpg");
+	addChild(spr);
+	spr->setScale(0.1f);
+	// åˆæœŸä½ç½®ã®è¨­å®š
+	spr->setPosition(Vec2(200.0f, 200.0f));
 
-		// ƒAƒNƒVƒ‡ƒ“‚Ìì¬^Às
-		//          -200`+200‚Ì”ÍˆÍ‚Ì—”
-		float jx = ((float)rand() / RAND_MAX - 0.5f) * 400;
-		float jy = ((float)rand() / RAND_MAX - 0.5f) * 400;
-		JumpBy* action1 = JumpBy::create(2.0f, Vec2(jx, jy), 300.0f, 2);
-		sprArray[i]->runAction(action1);
-	}
+	// ç§»å‹•
+	MoveTo* action1 = MoveTo::create(1.0f, Vec2(1000.0f, 0.0f));
+	MoveTo* action2 = MoveTo::create(1.0f, Vec2(100.0f, 0.0f));
+	Sequence* action3 = Sequence::create(action1, action2, nullptr);
+	RepeatForever* action4 = RepeatForever::create(action3);
+	//Repeat* action4 = Repeat::create(action3, 3);
 	
+	//// å›è»¢
+	//RotateTo* action2 = RotateTo::create(1.0f, 10.0f);
+	//// ç§»å‹•ã¨å›è»¢                               çµ‚ç«¯
+	//Spawn* action3 = Spawn::create(action1, action2, nullptr);
+	//// ã‚¸ãƒ£ãƒ³ãƒ—
+	//JumpTo* action4 = JumpTo::create(1.0f, Vec2(200.0f, 200.0f), 300.0f, 2);
+	//// ã‚¸ãƒ£ãƒ³ãƒ—å¾Œã«ç§»å‹•ã¨å›è»¢
+	//Sequence* action5 = Sequence::create(action4, action3, nullptr);
 
+
+	runAction(action4);
 
     return true;
 }
 
-// –ˆƒtƒŒ[ƒ€XVˆ—iŒp‘±“I‚É‰½‚©‚³‚¹‚é‚±‚Æj
+// æ¯ãƒ•ãƒ¬ãƒ¼ãƒ æ›´æ–°å‡¦ç†ï¼ˆç¶™ç¶šçš„ã«ä½•ã‹ã•ã›ã‚‹ã“ã¨ï¼‰
 void HelloWorld::update(float delta)
 {
 	
