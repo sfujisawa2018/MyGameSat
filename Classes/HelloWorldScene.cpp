@@ -66,7 +66,8 @@ bool HelloWorld::init()
 	spr->setPosition(Vec2(200.0f, 200.0f));
 
 	// 移動
-	MoveTo* action1 = MoveTo::create(1.0f, Vec2(1000.0f, 0.0f));
+	//MoveTo* action1 = MoveTo::create(1.0f, Vec2(1000.0f, 0.0f));
+	DelayTime* action1 = DelayTime::create(2.0f);
 	MoveTo* action2 = MoveTo::create(1.0f, Vec2(100.0f, 0.0f));
 	Sequence* action3 = Sequence::create(action1, action2, nullptr);
 	RepeatForever* action4 = RepeatForever::create(action3);
