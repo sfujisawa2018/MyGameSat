@@ -59,14 +59,6 @@ bool HelloWorld::init()
 	srand(time(0));
 
 	// スプライトの生成
-	Sprite* spr2 = Sprite::create("HelloWorld.png");
-	//             描画優先
-	addChild(spr2, 100);
-	spr2->setScale(0.3f);
-	// 初期位置の設定
-	spr2->setPosition(Vec2(200.0f, 200.0f));
-
-	// スプライトの生成
 	Sprite* spr = Sprite::create("mario.jpg");
 	//           描画優先
 	addChild(spr, 50);
@@ -74,29 +66,27 @@ bool HelloWorld::init()
 	// 初期位置の設定
 	spr->setPosition(Vec2(200.0f, 200.0f));
 
-	
+	DelayTime* actionDelay = DelayTime::create(3.0f);
 
-	// 移動
-	//MoveTo* action1 = MoveTo::create(1.0f, Vec2(1000.0f, 0.0f));
-	//DelayTime* action1 = DelayTime::create(2.0f);
-	//MoveTo* action2 = MoveTo::create(1.0f, Vec2(100.0f, 0.0f));
-	//Sequence* action3 = Sequence::create(action1, action2, nullptr);
-	//RepeatForever* action4 = RepeatForever::create(action3);
-	//Repeat* action4 = Repeat::create(action3, 3);
-	
-	//// 回転
-	//RotateTo* action2 = RotateTo::create(1.0f, 10.0f);
-	//// 移動と回転                               終端
-	//Spawn* action3 = Spawn::create(action1, action2, nullptr);
-	//// ジャンプ
-	//JumpTo* action4 = JumpTo::create(1.0f, Vec2(200.0f, 200.0f), 300.0f, 2);
-	//// ジャンプ後に移動と回転
-	//Sequence* action5 = Sequence::create(action4, action3, nullptr);
+	// 関数呼び出しアクションの作成
+	CallFunc* action = CallFunc::create(
+		CC_CALLBACK_0(HelloWorld::MyFunction, this));
 
+	Sequence* actionSeq = Sequence::create(actionDelay, action, nullptr);
 
-	//runAction(action4);
+	this->runAction(actionSeq);
 
     return true;
+}
+
+// 自作メンバ関数
+void HelloWorld::MyFunction()
+{
+	//log("Hello, MyFunction!!");
+
+	Sprite* spr = Sprite::create("HelloWorld.png");
+	addChild(spr);
+
 }
 
 // 毎フレーム更新処理（継続的に何かさせること）
