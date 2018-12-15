@@ -66,15 +66,15 @@ bool HelloWorld::init()
 	// 初期位置の設定
 	spr->setPosition(Vec2(200.0f, 200.0f));
 
-	DelayTime* actionDelay = DelayTime::create(3.0f);
+	MoveTo* actionMove = MoveTo::create(3.0f, Vec2(500,500));
 
 	// 関数呼び出しアクションの作成
 	CallFunc* action = CallFunc::create(
 		CC_CALLBACK_0(HelloWorld::MyFunction, this));
 
-	Sequence* actionSeq = Sequence::create(actionDelay, action, nullptr);
+	Sequence* actionSeq = Sequence::create(actionMove, action, nullptr);
 
-	this->runAction(actionSeq);
+	spr->runAction(actionSeq);
 
     return true;
 }
