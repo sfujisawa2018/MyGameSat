@@ -76,6 +76,17 @@ bool HelloWorld::init()
 
 	spr->runAction(actionSeq);
 
+	// 1/19
+	// イベントリスナーを作成する
+	EventListenerTouchOneByOne * listner = EventListenerTouchOneByOne::create();
+	// イベントリスナーに各コールバックをセットする
+	listner->onTouchBegan = CC_CALLBACK_2(HelloWorld::onTouchBegan, this);
+	listner->onTouchMoved = CC_CALLBACK_2(HelloWorld::onTouchMoved, this);
+	listner->onTouchEnded = CC_CALLBACK_2(HelloWorld::onTouchEnded, this);
+	listner->onTouchCancelled = CC_CALLBACK_2(HelloWorld::onTouchCancelled, this);
+	// イベントリスナーを登録する
+	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listner, this);
+
     return true;
 }
 
@@ -110,5 +121,32 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
     //EventCustom customEndEvent("game_scene_close_event");
     //_eventDispatcher->dispatchEvent(&customEndEvent);
 
+
+}
+
+bool HelloWorld::onTouchBegan(Touch* touch, Event* unused_event)
+{
+	// タッチ座標を取得
+	Vec2 touch_pos = touch->getLocation();
+
+	Sprite* spr = Sprite::create("mario.jpg");
+	spr->setPosition(touch_pos);
+	this->addChild(spr);
+
+	return true;
+}
+
+void HelloWorld::onTouchMoved(Touch* touch, Event* unused_event)
+{
+
+}
+
+void HelloWorld::onTouchEnded(Touch* touch, Event* unused_event)
+{
+
+}
+
+void HelloWorld::onTouchCancelled(Touch* touch, Event* unused_event)
+{
 
 }
