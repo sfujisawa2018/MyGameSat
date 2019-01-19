@@ -134,18 +134,25 @@ bool HelloWorld::onTouchBegan(Touch* touch, Event* unused_event)
 {
 	// タッチ座標を取得
 	Vec2 touch_pos = touch->getLocation();
-	// スプライトのAABBを取得
-	Rect rect_spr = spr->getBoundingBox();
 
-	// スプライトにタッチ座標が含まれるかどうか
-	bool hit = rect_spr.containsPoint(touch_pos);
-
-	if (hit)
+	// スプライトが空でなければ
+	if (spr != nullptr)
 	{
-		// タッチした時に実行したい処理
-		log("touch sprite!!");
+		// スプライトのAABBを取得
+		Rect rect_spr = spr->getBoundingBox();
+
+		// スプライトにタッチ座標が含まれるかどうか
+		bool hit = rect_spr.containsPoint(touch_pos);
+
+		if (hit)
+		{
+			// タッチした時に実行したい処理
+			log("touch sprite!!");
+			// スプライトを削除
+			spr->removeFromParent();
+			spr = nullptr; // スプライトは空です
+		}
 	}
-	
 
 	return true;
 }
