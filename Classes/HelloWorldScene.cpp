@@ -126,24 +126,25 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
 
 bool HelloWorld::onTouchBegan(Touch* touch, Event* unused_event)
 {
-	// タッチ座標を取得
-	Vec2 touch_pos = touch->getLocation();
-
-	Sprite* spr = Sprite::create("mario.jpg");
-	spr->setPosition(touch_pos);
-	this->addChild(spr);
+	
 
 	return true;
 }
 
 void HelloWorld::onTouchMoved(Touch* touch, Event* unused_event)
 {
-
+	
 }
 
 void HelloWorld::onTouchEnded(Touch* touch, Event* unused_event)
 {
+	// タッチ座標を取得
+	Vec2 touch_pos = touch->getLocation();
 
+	Sprite* spr = Sprite::create("mario.jpg");
+	spr->setScale(0.05f);
+	spr->setPosition(touch_pos);
+	this->addChild(spr);
 }
 
 void HelloWorld::onTouchCancelled(Touch* touch, Event* unused_event)
