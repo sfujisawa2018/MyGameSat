@@ -58,23 +58,23 @@ bool HelloWorld::init()
 	// 乱数の初期化
 	srand(time(0));
 
-	// スプライトの生成
-	Sprite* spr = Sprite::create("mario.jpg");
-	//           描画優先
-	addChild(spr, 50);
-	spr->setScale(0.1f);
-	// 初期位置の設定
-	spr->setPosition(Vec2(200.0f, 200.0f));
+	//// スプライトの生成
+	//Sprite* spr = Sprite::create("mario.jpg");
+	////           描画優先
+	//addChild(spr, 50);
+	//spr->setScale(0.1f);
+	//// 初期位置の設定
+	//spr->setPosition(Vec2(200.0f, 200.0f));
 
-	MoveTo* actionMove = MoveTo::create(3.0f, Vec2(500,500));
+	//MoveTo* actionMove = MoveTo::create(3.0f, Vec2(500,500));
 
-	// 関数呼び出しアクションの作成
-	CallFunc* action = CallFunc::create(
-		CC_CALLBACK_0(HelloWorld::MyFunction, this));
+	//// 関数呼び出しアクションの作成
+	//CallFunc* action = CallFunc::create(
+	//	CC_CALLBACK_0(HelloWorld::MyFunction, this));
 
-	Sequence* actionSeq = Sequence::create(actionMove, action, nullptr);
+	//Sequence* actionSeq = Sequence::create(actionMove, action, nullptr);
 
-	spr->runAction(actionSeq);
+	//spr->runAction(actionSeq);
 
 	// 1/19
 	// イベントリスナーを作成する
@@ -86,6 +86,12 @@ bool HelloWorld::init()
 	listner->onTouchCancelled = CC_CALLBACK_2(HelloWorld::onTouchCancelled, this);
 	// イベントリスナーを登録する
 	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listner, this);
+
+	// 画像の生成
+	spr = Sprite::create("mario.jpg");
+	spr->setScale(0.05f);
+	spr->setPosition(Vec2(500,500));
+	this->addChild(spr);
 
     return true;
 }
@@ -128,11 +134,18 @@ bool HelloWorld::onTouchBegan(Touch* touch, Event* unused_event)
 {
 	// タッチ座標を取得
 	Vec2 touch_pos = touch->getLocation();
+	// スプライトのAABBを取得
+	Rect rect_spr = spr->getBoundingBox();
 
-	spr = Sprite::create("mario.jpg");
-	spr->setScale(0.05f);
-	spr->setPosition(touch_pos);
-	this->addChild(spr);
+	// スプライトにタッチ座標が含まれるかどうか
+	bool hit = rect_spr.containsPoint(touch_pos);
+
+	if (hit)
+	{
+		// タッチした時に実行したい処理
+		log("touch sprite!!");
+	}
+	
 
 	return true;
 }
@@ -141,8 +154,6 @@ void HelloWorld::onTouchMoved(Touch* touch, Event* unused_event)
 {
 	// タッチ座標を取得
 	Vec2 touch_pos = touch->getLocation();
-
-	spr->setPosition(touch_pos);
 }
 
 void HelloWorld::onTouchEnded(Touch* touch, Event* unused_event)
