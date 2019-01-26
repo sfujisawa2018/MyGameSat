@@ -163,24 +163,25 @@ bool HelloWorld::onTouchBegan(Touch* touch, Event* unused_event)
 
 		if (hit)
 		{
-			// タッチした時に実行したい処理
-			log("touch sprite!!");
+			spr->stopAllActions();
+			//// タッチした時に実行したい処理
+			//log("touch sprite!!");
 
-			// エフェクトを発生
-			Sprite* effect = Sprite::create("effect3.png");
-			effect->setPosition(spr->getPosition());
-			this->addChild(effect);
-			// エフェクトにアクションをつける
-			ScaleTo* scale = ScaleTo::create(0.5f, 2.0f);
-			FadeOut* fade = FadeOut::create(0.5f);
-			RemoveSelf* remove = RemoveSelf::create();
-			Sequence* fadeseq = Sequence::create(fade, remove, nullptr);
-			effect->runAction(scale);
-			effect->runAction(fadeseq);
+			//// エフェクトを発生
+			//Sprite* effect = Sprite::create("effect3.png");
+			//effect->setPosition(spr->getPosition());
+			//this->addChild(effect);
+			//// エフェクトにアクションをつける
+			//ScaleTo* scale = ScaleTo::create(0.5f, 2.0f);
+			//FadeOut* fade = FadeOut::create(0.5f);
+			//RemoveSelf* remove = RemoveSelf::create();
+			//Sequence* fadeseq = Sequence::create(fade, remove, nullptr);
+			//effect->runAction(scale);
+			//effect->runAction(fadeseq);
 
-			// スプライトを削除
-			spr->removeFromParent();
-			spr = nullptr; // スプライトは空です
+			//// スプライトを削除
+			//spr->removeFromParent();
+			//spr = nullptr; // スプライトは空です
 		}
 	}
 
