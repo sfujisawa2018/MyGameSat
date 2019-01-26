@@ -110,7 +110,7 @@ bool HelloWorld::init()
 	// 複数のアクションを合成
 	Sequence* sequence = Sequence::create(
 		delay, callfunc, nullptr);
-	this->runAction(sequence);
+	//this->runAction(sequence);
 
     return true;
 }
