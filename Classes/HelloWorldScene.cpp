@@ -103,7 +103,7 @@ bool HelloWorld::init()
 	spr->runAction(blink);
 
 	// 時間経過を待つアクション
-	DelayTime* delay = DelayTime::create(3.0f);
+	DelayTime* delay = DelayTime::create(2.9f);
 	// 関数を呼び出すアクション
 	CallFunc* callfunc = CallFunc::create(
 		CC_CALLBACK_0(HelloWorld::MyFunction, this));
@@ -118,8 +118,9 @@ bool HelloWorld::init()
 void HelloWorld::MyFunction()
 {
 	// アクションを止める
-	spr->stopActionByTag(200);
-
+	//spr->stopActionByTag(200);
+	// 全アクションを停止
+	spr->stopAllActions();
 }
 
 // 毎フレーム更新処理（継続的に何かさせること）
