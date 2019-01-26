@@ -93,16 +93,25 @@ bool HelloWorld::init()
 	spr->setPosition(Vec2(500,500));
 	this->addChild(spr);
 
+	// 移動アクション
+	MoveTo* action = MoveTo::create(5.0f, Vec2(800,500));
+	spr->runAction(action);
+
+	// 時間経過を待つアクション
+	DelayTime* delay = DelayTime::create(3.0f);
+	// 関数を呼び出すアクション
+	CallFunc* callfunc = CallFunc::create(
+		CC_CALLBACK_0(HelloWorld::MyFunction, this));
+	// 複数のアクションを合成
+	Sequence* sequence = Sequence::create(
+		delay, callfunc, nullptr);
+	this->runAction(sequence);
+
     return true;
 }
 
-// 自作メンバ関数
 void HelloWorld::MyFunction()
 {
-	//log("Hello, MyFunction!!");
-
-	Sprite* spr = Sprite::create("HelloWorld.png");
-	addChild(spr);
 
 }
 

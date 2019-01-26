@@ -33,7 +33,9 @@ public:
     static cocos2d::Scene* createScene();
 
     virtual bool init();
+
 	void MyFunction();
+
 	// ŠÖ”‚ÌéŒ¾
 	void update(float delta) override;
     
