@@ -93,19 +93,22 @@ bool HelloWorld::init()
 		float y = (float)rand() / RAND_MAX * 720;
 
 		// 画像の生成
-		spr = Sprite::create("mario.jpg");
-		spr->setScale(0.05f);
-		spr->setPosition(Vec2(x, y));
-		this->addChild(spr);
+		spr[i] = Sprite::create("mario.jpg");
+		spr[i]->setScale(0.05f);
+		spr[i]->setPosition(Vec2(x, y));
+		this->addChild(spr[i]);
+
+		x = (float)rand() / RAND_MAX * 1280;
+		y = (float)rand() / RAND_MAX * 720;
 
 		// 移動アクション
-		MoveTo* action = MoveTo::create(5.0f, Vec2(1200, 500));
+		MoveTo* action = MoveTo::create(5.0f, Vec2(x, y));
 		action->setTag(200);
-		spr->runAction(action);
+		spr[i]->runAction(action);
 
-		// 点滅アクション
-		Blink* blink = Blink::create(5.0f, 10);
-		spr->runAction(blink);
+		//// 点滅アクション
+		//Blink* blink = Blink::create(5.0f, 10);
+		//spr->runAction(blink);
 	}
 
     return true;
@@ -113,10 +116,10 @@ bool HelloWorld::init()
 
 void HelloWorld::MyFunction()
 {
-	// アクションを止める
-	//spr->stopActionByTag(200);
-	// 全アクションを停止
-	spr->stopAllActions();
+	//// アクションを止める
+	////spr->stopActionByTag(200);
+	//// 全アクションを停止
+	//spr->stopAllActions();
 }
 
 // 毎フレーム更新処理（継続的に何かさせること）
@@ -148,36 +151,39 @@ bool HelloWorld::onTouchBegan(Touch* touch, Event* unused_event)
 	// タッチ座標を取得
 	Vec2 touch_pos = touch->getLocation();
 
-	// スプライトが空でなければ
-	if (spr != nullptr)
+	for (int i = 0; i < 10; i++)
 	{
-		// スプライトのAABBを取得
-		Rect rect_spr = spr->getBoundingBox();
-
-		// スプライトにタッチ座標が含まれるかどうか
-		bool hit = rect_spr.containsPoint(touch_pos);
-
-		if (hit)
+		// スプライトが空でなければ
+		if (spr[i] != nullptr)
 		{
-			spr->stopAllActions();
-			//// タッチした時に実行したい処理
-			//log("touch sprite!!");
+			// スプライトのAABBを取得
+			Rect rect_spr = spr[i]->getBoundingBox();
 
-			//// エフェクトを発生
-			//Sprite* effect = Sprite::create("effect3.png");
-			//effect->setPosition(spr->getPosition());
-			//this->addChild(effect);
-			//// エフェクトにアクションをつける
-			//ScaleTo* scale = ScaleTo::create(0.5f, 2.0f);
-			//FadeOut* fade = FadeOut::create(0.5f);
-			//RemoveSelf* remove = RemoveSelf::create();
-			//Sequence* fadeseq = Sequence::create(fade, remove, nullptr);
-			//effect->runAction(scale);
-			//effect->runAction(fadeseq);
+			// スプライトにタッチ座標が含まれるかどうか
+			bool hit = rect_spr.containsPoint(touch_pos);
 
-			//// スプライトを削除
-			//spr->removeFromParent();
-			//spr = nullptr; // スプライトは空です
+			if (hit)
+			{
+				spr[i]->stopAllActions();
+				//// タッチした時に実行したい処理
+				//log("touch sprite!!");
+
+				//// エフェクトを発生
+				//Sprite* effect = Sprite::create("effect3.png");
+				//effect->setPosition(spr->getPosition());
+				//this->addChild(effect);
+				//// エフェクトにアクションをつける
+				//ScaleTo* scale = ScaleTo::create(0.5f, 2.0f);
+				//FadeOut* fade = FadeOut::create(0.5f);
+				//RemoveSelf* remove = RemoveSelf::create();
+				//Sequence* fadeseq = Sequence::create(fade, remove, nullptr);
+				//effect->runAction(scale);
+				//effect->runAction(fadeseq);
+
+				//// スプライトを削除
+				//spr->removeFromParent();
+				//spr = nullptr; // スプライトは空です
+			}
 		}
 	}
 
