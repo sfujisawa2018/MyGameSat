@@ -87,30 +87,26 @@ bool HelloWorld::init()
 	// イベントリスナーを登録する
 	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listner, this);
 
-	// 画像の生成
-	spr = Sprite::create("mario.jpg");
-	spr->setScale(0.05f);
-	spr->setPosition(Vec2(500,500));
-	this->addChild(spr);
+	for (int i = 0; i < 10; i++)
+	{
+		float x = (float)rand() / RAND_MAX * 1280;
+		float y = (float)rand() / RAND_MAX * 720;
 
-	// 移動アクション
-	MoveTo* action = MoveTo::create(5.0f, Vec2(1200,500));
-	action->setTag(200);
-	spr->runAction(action);
+		// 画像の生成
+		spr = Sprite::create("mario.jpg");
+		spr->setScale(0.05f);
+		spr->setPosition(Vec2(x, y));
+		this->addChild(spr);
 
-	// 点滅アクション
-	Blink* blink = Blink::create(5.0f, 10);
-	spr->runAction(blink);
+		// 移動アクション
+		MoveTo* action = MoveTo::create(5.0f, Vec2(1200, 500));
+		action->setTag(200);
+		spr->runAction(action);
 
-	// 時間経過を待つアクション
-	DelayTime* delay = DelayTime::create(2.9f);
-	// 関数を呼び出すアクション
-	CallFunc* callfunc = CallFunc::create(
-		CC_CALLBACK_0(HelloWorld::MyFunction, this));
-	// 複数のアクションを合成
-	Sequence* sequence = Sequence::create(
-		delay, callfunc, nullptr);
-	//this->runAction(sequence);
+		// 点滅アクション
+		Blink* blink = Blink::create(5.0f, 10);
+		spr->runAction(blink);
+	}
 
     return true;
 }
