@@ -98,6 +98,10 @@ bool HelloWorld::init()
 	action->setTag(200);
 	spr->runAction(action);
 
+	// 点滅アクション
+	Blink* blink = Blink::create(5.0f, 10);
+	spr->runAction(blink);
+
 	// 時間経過を待つアクション
 	DelayTime* delay = DelayTime::create(3.0f);
 	// 関数を呼び出すアクション
