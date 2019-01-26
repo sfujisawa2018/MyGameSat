@@ -94,7 +94,8 @@ bool HelloWorld::init()
 	this->addChild(spr);
 
 	// 移動アクション
-	MoveTo* action = MoveTo::create(5.0f, Vec2(800,500));
+	MoveTo* action = MoveTo::create(5.0f, Vec2(1200,500));
+	action->setTag(200);
 	spr->runAction(action);
 
 	// 時間経過を待つアクション
@@ -112,6 +113,8 @@ bool HelloWorld::init()
 
 void HelloWorld::MyFunction()
 {
+	// アクションを止める
+	spr->stopActionByTag(200);
 
 }
 
